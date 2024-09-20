@@ -1,4 +1,4 @@
-package com.example.server.Entity;
+package com.example.server.entity;
 
 import static com.example.server.constant.Constant.BOARD_CYCLE;
 
