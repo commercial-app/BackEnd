@@ -21,18 +21,18 @@ public class Mission extends BaseEntity{
     private String content;
 
     @Column
-    private String image_url;
+    private String imageUrl;
 
     @ManyToOne
-    @JoinColumn(name = "categoryId")
+    @JoinColumn(name = "category_id")
     private MissionCategory missionCategory;
 
-    public Mission(Long missionId, String title, String content, String image_url,
+    public Mission(Long missionId, String title, String content, String imageUrl,
         MissionCategory missionCategory) {
         this.missionId = missionId;
         this.title = title;
         this.content = content;
-        this.image_url = image_url;
+        this.imageUrl = imageUrl;
         this.missionCategory = missionCategory;
     }
 
@@ -51,8 +51,8 @@ public class Mission extends BaseEntity{
         return content;
     }
 
-    public String getImage_url() {
-        return image_url;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
     public MissionCategory getMissionCategory() {
