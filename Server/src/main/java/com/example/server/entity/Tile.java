@@ -2,6 +2,8 @@ package com.example.server.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -16,7 +18,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Tile {
+public class Tile extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,17 +33,18 @@ public class Tile {
     @JoinColumn(name = "mission_id")
     private Mission mission;
 
-    @Column(name = "order")
+    @Column(name = "orders")
     private Integer order;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "state")
-    private Boolean state;
+    private TileState state;
 
-    public void changeState(Boolean state){
+    public void changeState(TileState state) {
         this.state = state;
     }
 
-    public void changeMission(Mission mission){
+    public void changeMission(Mission mission) {
         this.mission = mission;
     }
 }
