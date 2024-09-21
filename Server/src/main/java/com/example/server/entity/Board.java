@@ -2,16 +2,8 @@ package com.example.server.entity;
 
 import static com.example.server.common.constant.Constant.BOARD_CYCLE;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
+
 import java.util.ArrayList;
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -32,7 +24,7 @@ public class Board {
     @Column(name = "member_position")
     private Integer memberPosition;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
 

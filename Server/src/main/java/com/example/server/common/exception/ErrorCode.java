@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 public enum ErrorCode {
 
     NOT_FOUND_MEMBER(HttpStatus.NOT_FOUND, "존재하지 않는 유저입니다."),
+    NOT_FOUND_BOARD(HttpStatus.NOT_FOUND, "존재하지 않는 보드입니다."),
     DUPLICATE_EMAIL(HttpStatus.BAD_REQUEST, "중복되는 이메일입니다."),
     INVALID_TOKEN(HttpStatus.UNAUTHORIZED,"유효하지 않은 토큰입니다."),
     TOKEN_EXPIRED(HttpStatus.UNAUTHORIZED,"만료된 토큰입니다."),
