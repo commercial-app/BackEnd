@@ -8,8 +8,14 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Tile {
 
     @Id
@@ -30,37 +36,6 @@ public class Tile {
 
     @Column(name = "state")
     private Boolean state;
-
-    public Tile(Long id, Board board, Mission mission, Integer order, Boolean state) {
-        this.id = id;
-        this.board = board;
-        this.mission = mission;
-        this.order = order;
-        this.state = state;
-    }
-
-    public Tile() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public Board getBoard() {
-        return board;
-    }
-
-    public Mission getMission() {
-        return mission;
-    }
-
-    public Integer getOrder() {
-        return order;
-    }
-
-    public Boolean getState() {
-        return state;
-    }
 
     public void changeState(Boolean state){
         this.state = state;

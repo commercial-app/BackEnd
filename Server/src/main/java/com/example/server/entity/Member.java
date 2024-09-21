@@ -8,10 +8,14 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Member extends BaseEntity {
 
     @Id
@@ -34,7 +38,7 @@ public class Member extends BaseEntity {
     private Role role;
 
     public MemberDTO toDTO() {
-        return new MemberDTO(memberId, email, name, point, role);
+        return new MemberDTO(memberId, email, password, name, point, role);
     }
 
 }
