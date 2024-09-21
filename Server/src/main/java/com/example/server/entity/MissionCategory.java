@@ -5,29 +5,16 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import lombok.Data;
 
 @Entity
-public class MissionCategory extends BaseEntity{
+@Data
+public class MissionCategory extends BaseEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long categoryId;
 
     @Column
     private String name;
-
-    public MissionCategory(Long categoryId, String name) {
-        this.categoryId = categoryId;
-        this.name = name;
-    }
-
-    public MissionCategory() {
-    }
-
-    public Long getCategoryId() {
-        return categoryId;
-    }
-
-    public String getName() {
-        return name;
-    }
 }

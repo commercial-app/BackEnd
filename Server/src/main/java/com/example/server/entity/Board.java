@@ -14,8 +14,10 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
+import lombok.Data;
 
 @Entity
+@Data
 public class Board {
 
     @Id
@@ -32,32 +34,6 @@ public class Board {
 
     @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Tile> tiles = new ArrayList<>();
-
-    public Board(Long id, Integer memberPosition, Member member, List<Tile> tiles) {
-        this.id = id;
-        this.memberPosition = memberPosition;
-        this.member = member;
-        this.tiles = tiles;
-    }
-
-    public Board() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public Integer getMemberPosition() {
-        return memberPosition;
-    }
-
-    public Member getMember() {
-        return member;
-    }
-
-    public List<Tile> getTiles() {
-        return tiles;
-    }
 
     public void moveMemberPosition(Integer dice) {
         this.memberPosition = (this.memberPosition + dice) % BOARD_CYCLE;
