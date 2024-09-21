@@ -133,9 +133,9 @@ public class BoardService {
      */
     private List<BoardDTO.TileDTO> convertTilesToDTOs(List<Tile> tiles, Long memberId) {
         return tiles.stream().map(tile -> {
-            // 미션 제출 상태 조회
+            // 미션 제출 상태 조회 (가장 최근의 MissionSummit 조회)
             Optional<MissionSummit> summitOpt = missionSummitRepository
-                    .findByMemberIdAndMissionId(memberId, tile.getMission().getMissionId());
+                    .findTopByMemberIdAndMissionIdOrderByCreatedAtDesc(memberId, tile.getMission().getMissionId());
 
             // 미션 제출 상태 및 반려 사유 설정
             MissionSummitState missionSummitState = summitOpt.map(MissionSummit::getState).orElse(null);
