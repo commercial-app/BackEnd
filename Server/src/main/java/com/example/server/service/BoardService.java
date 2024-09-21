@@ -40,7 +40,7 @@ public class BoardService {
         // 20개의 타일 생성 및 미션 할당
         List<Tile> tiles = new ArrayList<>();
         for (int i = 0; i < 20; i++) {
-            Mission mission = getRandomMission(); // 무작위 미션 선택
+            Mission mission = getRandomMission(member.getMemberId()); // 무작위 미션 선택
             Tile tile = new Tile();
             tile.setBoard(board);
             tile.setMission(mission);
@@ -81,9 +81,21 @@ public class BoardService {
     /**
      * 무작위 미션 선택 메서드
      */
-    private Mission getRandomMission() {
+    private Mission getRandomMission(Long memberId) {
+        // 유저(Member) 정보 조회
+        Member member = memberRepository.findById(memberId)
+                .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_MEMBER));
+
+        // 모든 미션 목록 조회
         List<Mission> missions = missionRepository.findAll();
-        return missions.get(new Random().nextInt(missions.size()));
+
+        // 이미 완료한 미션은 제외한 미션 목록 필터링
+        List<Mission> availableMissions = missions.stream()
+                .filter(mission -> !member.isCompletedMission(mission))  // 완료한 미션 제외
+                .collect(Collectors.toList());
+
+        // 완료하지 않은 미션 중 하나를 무작위로 선택
+        return availableMissions.get(new Random().nextInt(availableMissions.size()));
     }
 
     /**
@@ -120,7 +132,7 @@ public class BoardService {
         // 완료한 타일의 미션을 새로운 미션으로 변경
         for (Tile tile : tiles) {
             if (tile.getState()) { // 완료한 미션인 경우에만 미션 변경
-                Mission newMission = getRandomMission();
+                Mission newMission = getRandomMission(board.getMember().getMemberId());
                 tile.changeMission(newMission);
                 tile.changeState(false); // 미션 갱신 후 완료 상태 초기화
                 tileRepository.save(tile);  // 개별 타일 저장
