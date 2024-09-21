@@ -25,8 +25,10 @@ public class MemberService {
         return memberRepository.save(member).getMemberId();
     }
 
-    public Boolean existEmail(String email) {
-        return memberRepository.existsByEmail(email);
+    public void existEmail(String email) {
+        if (memberRepository.existsByEmail(email)) {
+            throw new CustomException(ErrorCode.DUPLICATE_EMAIL);
+        }
     }
 
     public void matchPassword(MemberDTO memberDTO, String password) {
