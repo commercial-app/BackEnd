@@ -1,5 +1,6 @@
 package com.example.server.entity;
 
+import com.example.server.dto.MissionSummitDTO;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -11,6 +12,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -18,34 +20,36 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Tile extends BaseEntity {
+@Builder
+public class MissionSummit extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "tile_id")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "board_id")
-    private Board board;
+    @Column
+    private String imageUrl;
+
+    @Column
+    private String content;
+
+    @Enumerated(EnumType.STRING)
+    private MissionSummitState state;
+
+    @Column
+    private String rejection;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "mission_id")
     private Mission mission;
 
-    @Column(name = "orders")
-    private Integer order;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
+    private Member member;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "state")
-    private TileState state;
-
-    public void changeState(TileState state) {
-        this.state = state;
+    public MissionSummitDTO toDTO() {
+        return new MissionSummitDTO(id, imageUrl, content, state, rejection, mission.getMissionId(),
+            member.getMemberId());
     }
 
-    public void changeMission(Mission mission) {
-
-        this.mission = mission;
-    }
 }
