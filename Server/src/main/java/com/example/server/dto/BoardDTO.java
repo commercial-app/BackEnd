@@ -1,5 +1,6 @@
 package com.example.server.dto;
 
+import com.example.server.entity.MissionSummitState;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -30,5 +31,7 @@ public class BoardDTO {
         private String content;      // 미션의 설명 내용
         private String imageUrl;     // 미션과 관련된 이미지 URL
         private String categoryName; // 미션이 속한 카테고리 이름
+        private MissionSummitState missionSummitState; // 미션 제출 여부
+        private String rejection; // 미션 거절 멘트
     }
 }
