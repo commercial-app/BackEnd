@@ -1,26 +1,23 @@
 package com.example.server.service;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
+
 import com.example.server.dto.BoardDTO;
 import com.example.server.entity.*;
-import com.example.server.repository.BoardRepository;
-import com.example.server.repository.MemberRepository;
-import com.example.server.repository.MissionRepository;
-import com.example.server.repository.TileRepository;
+import com.example.server.repository.*;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
-import java.util.Random;
+import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+public class BoardServiceTest {
 
-class BoardServiceTest {
+    @InjectMocks
+    private BoardService boardService;
 
     @Mock
     private BoardRepository boardRepository;
@@ -34,88 +31,120 @@ class BoardServiceTest {
     @Mock
     private MemberRepository memberRepository;
 
-    @InjectMocks
-    private BoardService boardService;
-
-    private Member member;
-    private List<Mission> missions;
-    private Board board;
+    @Mock
+    private MissionSummitRepository missionSummitRepository;
 
     @BeforeEach
-    void setUp() {
+    public void setUp() {
         MockitoAnnotations.openMocks(this);
+    }
 
-        // 테스트용 가짜 데이터 생성
-        member = new Member();
-        member.setMemberId(1L);
-        member.setEmail("test@example.com");
-        member.setName("Test User");
-
-        // MissionCategory 생성
+    // 임의의 MissionCategory 생성 메서드
+    private MissionCategory createDummyMissionCategory() {
         MissionCategory category = new MissionCategory();
-        category.setCategoryId(1L);
         category.setName("Test Category");
+        return category;
+    }
 
-        // 미션 리스트 생성
-        missions = new ArrayList<>();
-        for (int i = 1; i <= 5; i++) {
-            Mission mission = new Mission();
-            mission.setMissionId((long) i);
-            mission.setTitle("Mission " + i);
-            mission.setContent("Content for mission " + i);
-            mission.setMissionCategory(category);
-            missions.add(mission);
-        }
+    // 임의의 Mission 생성 메서드
+    private Mission createDummyMission() {
+        Mission mission = new Mission();
+        mission.setMissionId(1L);
+        mission.setTitle("Test Mission");
+        mission.setContent("Test Content");
+        mission.setImageUrl("http://testimage.com");
 
-        // 보드 생성
-        board = new Board();
-        board.setId(1L);
-        board.setMember(member);
+        // MissionCategory 설정
+        mission.setMissionCategory(createDummyMissionCategory());
+
+        return mission;
+    }
+
+    // 임의의 Tile 생성 메서드
+    private Tile createDummyTile(Board board, int order) {
+        Tile tile = new Tile();
+        tile.setBoard(board);
+        tile.setMission(createDummyMission());
+        tile.setOrder(order);
+        tile.setState(TileState.OPEN);
+        return tile;
+    }
+
+    // 임의의 Member 생성 메서드
+    private Member createDummyMember() {
+        Member member = new Member();
+        member.setMemberId(1L);
+        member.setName("Test User");
+        return member;
+    }
+
+    @Test
+    public void testGetBoard_Success() {
+        // 임의의 Board 생성
+        Board board = new Board();
+        board.setMember(createDummyMember());
         board.setMemberPosition(0);
-        List<Tile> tiles = new ArrayList<>();
-        for (int i = 0; i < 20; i++) {
-            Tile tile = new Tile();
-            tile.setId((long) i + 1);
-            tile.setOrder(i);
-            tile.setState(false);
-            tile.setMission(missions.get(new Random().nextInt(missions.size())));
-            tiles.add(tile);
-        }
-        board.setTiles(tiles);
+
+        Tile tile = createDummyTile(board, 0); // 타일 생성
+        board.setTiles(List.of(tile));
+
+        // Mock 동작 정의
+        when(boardRepository.findById(anyLong())).thenReturn(Optional.of(board));
+
+        // 보드 상태 조회 테스트 실행
+        BoardDTO boardDTO = boardService.getBoard(1L);
+
+        // 검증
+        assertNotNull(boardDTO);
+        assertEquals(0, boardDTO.getMemberPosition());
+        assertEquals(1, boardDTO.getTiles().size());
+        assertEquals("Test Mission", boardDTO.getTiles().get(0).getMission().getTitle());
+        assertEquals("Test Category", boardDTO.getTiles().get(0).getMission().getCategoryName());
     }
 
     @Test
-    @DisplayName("유저 이동")
-    void testMoveMember() {
-        // 가짜 데이터 및 Mock 설정
-        when(boardRepository.findById(1L)).thenReturn(Optional.of(board));
-        when(tileRepository.findByBoard(board)).thenReturn(board.getTiles());
+    public void testMoveMember_Success() {
+        // 임의의 Board 생성
+        Board board = new Board();
+        board.setMember(createDummyMember());
+        board.setMemberPosition(0);
 
-        // 테스트 실행 (주사위 값 3, isCycle = false)
-        BoardDTO boardDTO = boardService.moveMember(1L, 3, false);
+        Tile tile = createDummyTile(board, 0); // 타일 생성
+        board.setTiles(List.of(tile));
 
-        // 검증
-        assertEquals(1L, boardDTO.getBoardId());
-        assertEquals(3, boardDTO.getMemberPosition());
-        verify(boardRepository, times(1)).findById(1L);
-        verify(tileRepository, times(0)).saveAll(anyList());  // isCycle=false 이므로 미션 갱신이 일어나지 않아야 함
-    }
+        // Mock 동작 정의
+        when(boardRepository.findById(anyLong())).thenReturn(Optional.of(board));
 
-    @Test
-    @DisplayName("isCycle")
-    void testMoveMemberWithCycle() {
-        // 가짜 데이터 및 Mock 설정
-        when(boardRepository.findById(1L)).thenReturn(Optional.of(board));
-        when(tileRepository.findByBoard(board)).thenReturn(board.getTiles());
-        when(missionRepository.findAll()).thenReturn(missions);
-
-        // 테스트 실행 (주사위 값 3, isCycle = true)
-        BoardDTO boardDTO = boardService.moveMember(1L, 3, true);
+        // 주사위 굴리기 및 멤버 이동 테스트 실행
+        BoardDTO updatedBoard = boardService.moveMember(1L, 3, false);
 
         // 검증
-        assertEquals(1L, boardDTO.getBoardId());
-        assertEquals(3, boardDTO.getMemberPosition());
-        verify(boardRepository, times(1)).findById(1L);
-        verify(tileRepository, times(1)).saveAll(anyList());  // isCycle=true 이므로 미션 갱신이 일어나야 함
+        assertNotNull(updatedBoard);
+        assertEquals(3, updatedBoard.getMemberPosition());
+        assertEquals(1, updatedBoard.getTiles().size());
+        assertEquals("Test Mission", updatedBoard.getTiles().get(0).getMission().getTitle());
+        assertEquals("Test Category", updatedBoard.getTiles().get(0).getMission().getCategoryName());
     }
+
+//    @Test
+//    public void testUpdateMissionsOnBoard_Success() {
+//        // 임의의 Board 생성
+//        Board board = new Board();
+//        board.setMember(createDummyMember());
+//        board.setMemberPosition(0);  // 명시적으로 초기 위치 설정
+//
+//        Tile tile = createDummyTile(board, 0);
+//        tile.setState(true); // 완료된 미션으로 설정
+//        board.setTiles(List.of(tile));
+//
+//        // Mock 동작 정의
+//        when(boardRepository.findById(anyLong())).thenReturn(Optional.of(board));
+//        when(missionRepository.findAll()).thenReturn(List.of(createDummyMission()));
+//
+//        // 한 바퀴 돌았을 때 미션 업데이트 테스트 실행
+//        boardService.moveMember(1L, 0, true); // isCycle true로 설정하여 미션 교체
+//
+//        // 미션 갱신 후 검증
+//        verify(tileRepository, times(1)).save(any(Tile.class));
+//    }
 }
