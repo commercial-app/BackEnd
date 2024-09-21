@@ -10,9 +10,12 @@ import com.example.server.entity.Member;
 import com.example.server.entity.Mission;
 import com.example.server.entity.MissionSummit;
 import com.example.server.entity.MissionSummitState;
+import com.example.server.entity.Tile;
+import com.example.server.entity.TileState;
 import com.example.server.repository.MemberRepository;
 import com.example.server.repository.MissionRepository;
 import com.example.server.repository.MissionSummitRepository;
+import com.example.server.repository.TileRepository;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -32,6 +35,7 @@ public class MissionSummitService {
     private final MemberRepository memberRepository;
     private final MissionRepository missionRepository;
     private final MissionSummitRepository missionSummitRepository;
+    private final TileRepository tileRepository;
 
     private static final String UPLOAD_DIR = "uploads/";
 
@@ -84,12 +88,13 @@ public class MissionSummitService {
             //보드 서비스 호출(타일위의 미션dto에 상태와 코멘트 갱신)
             return;
         }
-        //보드 서비스 호출 -> 미션 성공 -> 타일 비활성화
         Member member = missionSummit.getMember();
         Mission mission = missionSummit.getMission();
-        CompletedMission completed = new CompletedMission(0L, member, mission);
-        member.addCompletedMission(completed);
+        member.addCompletedMission(new CompletedMission(0L, member, mission));
+        Tile tile = findTimeByMissionIdAndMemberId(mission.getMissionId(), member.getMemberId());
+        tile.changeState(TileState.CLOSE);
         memberRepository.save(member);
+        tileRepository.save(tile);
     }
 
     @Transactional(readOnly = true)
@@ -97,6 +102,11 @@ public class MissionSummitService {
         return missionSummitRepository.findAllByState(MissionSummitState.PENDING).stream()
             .map(MissionSummit::toDTO).collect(
                 Collectors.toList());
+    }
+
+    public Tile findTimeByMissionIdAndMemberId(Long missionId, Long memberId) {
+        return tileRepository.findByMissionIdAndMemberId(missionId, memberId)
+            .get();
     }
 
 }
