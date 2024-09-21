@@ -32,7 +32,7 @@ public class MemberController {
         memberService.existEmail(request.email());
         MemberDTO memberDTO = new MemberDTO(0L, request.email(), request.password(), request.name(),
             0L, Role.USER);
-        boardService.createBoard(0L);
+        boardService.createBoard(memberDTO.memberId());
         return ResponseEntity.status(HttpStatus.CREATED).body(memberService.saveMember(memberDTO));
     }
 
