@@ -1,5 +1,6 @@
 package com.example.server.entity;
 
+import com.example.server.dto.MemberDTO;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -7,13 +8,15 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import lombok.Data;
 
 @Entity
-public class Member extends BaseEntity{
+@Data
+public class Member extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long userId;
+    private Long memberId;
 
     @Column(nullable = false)
     private String email;
@@ -30,39 +33,8 @@ public class Member extends BaseEntity{
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    public Member(Long userId, String email, String password, String name, Long point, Role role) {
-        this.userId = userId;
-        this.email = email;
-        this.password = password;
-        this.name = name;
-        this.point = point;
-        this.role = role;
+    public MemberDTO toDTO() {
+        return new MemberDTO(memberId, email, name, point, role);
     }
 
-    public Member() {
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public Long getPoint() {
-        return point;
-    }
-
-    public Role getRole() {
-        return role;
-    }
 }
