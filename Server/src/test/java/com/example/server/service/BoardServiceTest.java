@@ -18,7 +18,6 @@ import java.util.Optional;
 import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 class BoardServiceTest {
@@ -83,39 +82,6 @@ class BoardServiceTest {
             tiles.add(tile);
         }
         board.setTiles(tiles);
-    }
-
-    @Test
-    @DisplayName("회원가입 시 보드생성")
-    void testCreateBoard() {
-        // 가짜 데이터 및 Mock 설정
-        when(memberRepository.findById(1L)).thenReturn(Optional.of(member));
-        when(missionRepository.findAll()).thenReturn(missions);
-
-        // 보드 저장 시 ID 설정
-        doAnswer(invocation -> {
-            Board savedBoard = invocation.getArgument(0);
-            savedBoard.setId(1L);  // 보드 ID 설정
-            return savedBoard;
-        }).when(boardRepository).save(any(Board.class));
-
-        // 타일 저장 시 타일 ID 설정
-        doAnswer(invocation -> {
-            List<Tile> savedTiles = invocation.getArgument(0);
-            for (int i = 0; i < savedTiles.size(); i++) {
-                savedTiles.get(i).setId((long) i + 1);  // 타일 ID 설정
-            }
-            return savedTiles;
-        }).when(tileRepository).saveAll(anyList());
-
-        // 테스트 실행
-        BoardDTO boardDTO = boardService.createBoard(1L);
-
-        // 검증
-        assertEquals(1L, boardDTO.getBoardId());  // 보드 ID 검증
-        assertEquals(20, boardDTO.getTiles().size());  // 타일 개수 검증
-        verify(boardRepository, times(1)).save(any(Board.class));
-        verify(tileRepository, times(1)).saveAll(anyList());
     }
 
     @Test

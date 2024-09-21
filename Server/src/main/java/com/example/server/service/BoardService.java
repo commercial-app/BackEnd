@@ -28,7 +28,7 @@ public class BoardService {
     /**
      * 유저 회원가입 시 보드를 생성하고, 20개의 타일과 미션을 할당한 후 반환
      */
-    public BoardDTO createBoard(Long memberId) {
+    public void createBoard(Long memberId) {
         // 유저(Member) 정보 조회
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_MEMBER));
@@ -73,8 +73,6 @@ public class BoardService {
                 )
         ).collect(Collectors.toList());
 
-        // 보드 DTO 반환
-        return new BoardDTO(board.getId(), board.getMemberPosition(), tileDTOs);
     }
 
     /**
