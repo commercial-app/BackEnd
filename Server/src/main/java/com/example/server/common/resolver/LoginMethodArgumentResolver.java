@@ -10,11 +10,13 @@ import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.MethodParameter;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 
+@Component
 @RequiredArgsConstructor
 public class LoginMethodArgumentResolver implements HandlerMethodArgumentResolver {
 
@@ -30,7 +32,7 @@ public class LoginMethodArgumentResolver implements HandlerMethodArgumentResolve
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer,
         NativeWebRequest webRequest, WebDataBinderFactory binderFactory) {
         try {
-            String token = getToken(webRequest.getHeader("authorization"));
+            String token = getToken(webRequest.getHeader("Authorization"));
             if (token == null) {
                 throw new CustomException(ErrorCode.INVALID_TOKEN);
             }
