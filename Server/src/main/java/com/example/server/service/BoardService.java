@@ -124,19 +124,21 @@ public class BoardService {
 
 
     /**
-     * 한 바퀴 돌았을 때 새로운 미션으로 갱신
+     * 한 바퀴 돌았을 때 완료한 미션을 새로운 미션으로 갱신
      */
     private void updateMissionsOnBoard(Board board) {
         // 보드에 속한 모든 타일 가져오기
         List<Tile> tiles = tileRepository.findByBoard(board);
 
-        // 각 타일의 미션을 새로운 미션으로 변경
+        // 완료한 타일의 미션을 새로운 미션으로 변경
         for (Tile tile : tiles) {
-            Mission newMission = getRandomMission();
-            tile.changeMission(newMission);
-            tile.changeState(false); // 미션 갱신 후 완료 상태 초기화
+            if (tile.getState()) { // 완료한 미션인 경우에만 미션 변경
+                Mission newMission = getRandomMission();
+                tile.changeMission(newMission);
+                tile.changeState(false); // 미션 갱신 후 완료 상태 초기화
+            }
         }
+
         tileRepository.saveAll(tiles);  // 변경된 타일 저장
     }
-
 }
