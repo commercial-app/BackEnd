@@ -1,5 +1,6 @@
 package com.example.server.entity;
 
+import com.example.server.dto.MissionSummitDTO;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -45,5 +46,10 @@ public class MissionSummit extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
+
+    public MissionSummitDTO toDTO() {
+        return new MissionSummitDTO(id, imageUrl, content, state, rejection, mission.getMissionId(),
+            member.getMemberId());
+    }
 
 }
