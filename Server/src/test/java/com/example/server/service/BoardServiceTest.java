@@ -8,6 +8,7 @@ import com.example.server.entity.Tile;
 import com.example.server.repository.BoardRepository;
 import com.example.server.repository.TileRepository;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -59,6 +60,7 @@ class BoardServiceTest {
     }
 
     @Test
+    @DisplayName("보드 데이터 조회")
     void getBoard_success() {
         // 가짜 데이터로 리포지토리 동작을 정의
         when(boardRepository.findById(1L)).thenReturn(Optional.of(board));
