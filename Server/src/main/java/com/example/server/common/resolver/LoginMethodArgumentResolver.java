@@ -1,9 +1,13 @@
 package com.example.server.common.resolver;
 
 import com.example.server.common.annotation.LoginMembers;
+import com.example.server.common.exception.CustomException;
+import com.example.server.common.exception.ErrorCode;
 import com.example.server.common.jwtUtil.JwtProvider;
 import com.example.server.dto.MemberDTO;
 import com.example.server.service.MemberService;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.JwtException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.MethodParameter;
 import org.springframework.web.bind.support.WebDataBinderFactory;
@@ -24,11 +28,20 @@ public class LoginMethodArgumentResolver implements HandlerMethodArgumentResolve
 
     @Override
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer,
-        NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
-        String token = getToken(webRequest.getHeader("authorization"));
-        Long memberId = jwtProvider.getMemberIdFromToken(token);
-        MemberDTO memberDTO = memberService.getMemberDTOByMemberId(memberId);
-        return memberDTO;
+        NativeWebRequest webRequest, WebDataBinderFactory binderFactory) {
+        try {
+            String token = getToken(webRequest.getHeader("authorization"));
+            if (token == null) {
+                throw new CustomException(ErrorCode.INVALID_TOKEN);
+            }
+            Long memberId = jwtProvider.getMemberIdFromToken(token);
+            MemberDTO memberDTO = memberService.getMemberDTOByMemberId(memberId);
+            return memberDTO;
+        } catch (ExpiredJwtException e) {
+            throw new CustomException(ErrorCode.TOKEN_EXPIRED);
+        } catch (JwtException e) {
+            throw new CustomException(ErrorCode.INVALID_TOKEN);
+        }
     }
 
     public String getToken(String author) {
