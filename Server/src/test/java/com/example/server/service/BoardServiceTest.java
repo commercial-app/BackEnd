@@ -19,6 +19,7 @@ public class BoardServiceTest {
     @InjectMocks
     private BoardService boardService;
 
+
     @Mock
     private BoardRepository boardRepository;
 

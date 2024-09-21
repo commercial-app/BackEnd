@@ -45,6 +45,7 @@ public class Tile extends BaseEntity {
     }
 
     public void changeMission(Mission mission) {
+
         this.mission = mission;
     }
 }

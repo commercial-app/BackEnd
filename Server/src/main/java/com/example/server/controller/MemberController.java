@@ -50,5 +50,4 @@ public class MemberController {
     public ResponseEntity<MemberDTO> getMember(@LoginMembers MemberDTO memberDTO) {
         return ResponseEntity.ok(memberDTO);
     }
-
 }

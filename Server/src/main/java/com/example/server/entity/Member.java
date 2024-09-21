@@ -54,5 +54,4 @@ public class Member extends BaseEntity {
     public Boolean isCompletedMission(Mission mission) {
         return this.completedMissions.stream().anyMatch(o -> o.getMission().equals(mission));
     }
-
 }
