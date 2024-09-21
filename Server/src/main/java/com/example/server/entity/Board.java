@@ -1,6 +1,6 @@
 package com.example.server.entity;
 
-import static com.example.server.constant.Constant.BOARD_CYCLE;
+import static com.example.server.common.constant.Constant.BOARD_CYCLE;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
