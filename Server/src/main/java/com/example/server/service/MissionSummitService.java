@@ -12,6 +12,7 @@ import com.example.server.entity.MissionSummit;
 import com.example.server.entity.MissionSummitState;
 import com.example.server.entity.Tile;
 import com.example.server.entity.TileState;
+import com.example.server.repository.CompletedMissionRepository;
 import com.example.server.repository.MemberRepository;
 import com.example.server.repository.MissionRepository;
 import com.example.server.repository.MissionSummitRepository;
@@ -31,6 +32,7 @@ public class MissionSummitService {
     private final MissionRepository missionRepository;
     private final MissionSummitRepository missionSummitRepository;
     private final TileRepository tileRepository;
+    private final CompletedMissionRepository completedMissionRepository;
 
     @Transactional
     public Long saveMissionSummit(MissionSummitRequest request, Long memberId, Long missionId) {
@@ -76,17 +78,17 @@ public class MissionSummitService {
         }
 
         // 제출이 승인된 경우 완료된 미션을 회원에게 추가
-        Member member = missionSummit.getMember();
+        Member member = memberRepository.findById(missionSummit.getMember().getMemberId())
+            .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_MEMBER));
         Mission mission = missionSummit.getMission();
-        member.addCompletedMission(new CompletedMission(0L, member, mission));
+        CompletedMission completed = completedMissionRepository.save(
+            new CompletedMission(0L, member, mission));
+        member.addCompletedMission(completed);
 
         // 타일 상태 업데이트 (완료 상태로 변경)
         Tile tile = findTimeByMissionIdAndMemberId(mission.getMissionId(), member.getMemberId());
         tile.changeState(TileState.CLOSE);  // 미션 완료
 
-        // 상태가 바뀐 회원과 타일을 저장
-        memberRepository.save(member);
-        tileRepository.save(tile);
     }
 
     @Transactional(readOnly = true)
