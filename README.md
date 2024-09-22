@@ -57,20 +57,14 @@ ERD 다이어그램
 
 API 명세서
 
-| 제목           | 설명                                           |
+| 기능           | HTTP매서드          | URL               | Header                        
+      |  Request                            | Status     &  Response                 |
 |----------------|------------------------------------------------|
-| API 이름       | 회원가입 API                                   |
-| 엔드포인트     | POST /api/register                             |
-| 메서드         | POST                                           |
-| 요청 형식     | Content-Type: application/json                |
-| 요청 예시      | ```json                                        |
-|                | {                                              |
-|                |   "name": "이름",                            |
-|                |   "email": "이메일",                         |
-|                |   "password": "비밀번호"                     |
-|                | }                                              |
-|                | ```                                           |
-| 응답 형식      | 201 Created                                    |
+| 회원가입 요청 |   POST    |   /api/register |  Content-Type: application/json | {
+   name : ,
+   email : ,
+   password :
+} | 201 Created |
 
 ### 구현 방식
 어떤 언어와 프레임워크를 사용했는지, 만약 배포를 진행했다면 환경은 어떤지 등을 기재
