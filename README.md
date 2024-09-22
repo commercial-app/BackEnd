@@ -151,3 +151,77 @@ ex) 탁구왕 - 실력별 탁구 매칭 서비스 -->
 3. 모바일 앱 개발: 웹 서비스 외에도 모바일 앱을 개발하여 더 편리하게 서비스를 이용할 수 있도록 하고, GPS 기반으로 주변 상가를 추천하는 기능을 추가합니다.
 
 4. 지속 가능한 소비 촉진: 친환경 가게와의 협업을 통해, 지속 가능한 소비를 장려하는 프로그램을 도입합니다. 예를 들어, 친환경 가게를 방문하면 추가 마일리지를 제공하는 방식입니다.
+
+
+
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+
+***
+
+
+
+# **Frontend**
+
+## < **Library 및 Framework 정리** >
+-  **Next.js - React 기반 Framework**
+- 상태관리 라이브러리 <br/>
+  : Zustand
+- CSS 라이브러리 <br/>
+  : tailwind
+- API <br/>
+  : Naver news
+
+  
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+
+## <회원가입 페이지> <br/> <br/>
+![image](https://github.com/user-attachments/assets/4b7b522e-40c3-4624-b665-b65d45eaaf84)
+
+
+
+## <로그인 페이지> <br/> <br/>
+![image](https://github.com/user-attachments/assets/3c4884fc-89fe-4372-be56-fa2e20aee1c9)
+
+
+## <소개 페이지> <br/> <br/>
+![image](https://github.com/user-attachments/assets/85a0ecc1-ace1-4e63-a684-5e923251698d)
+
+
+## <메인 페이지> <br/> <br/>  - 게임 접속 버튼 + 네이버 뉴스  
+![image](https://github.com/user-attachments/assets/2728c4b8-1598-4daf-a1d3-c7550300d812)
+
+![image](https://github.com/user-attachments/assets/592c4468-c972-4cee-b7df-12ef3f74e42a)
+
+
+
+
+## <부루마블 게임 페이지> <br/> <br/> 
+![image](https://github.com/user-attachments/assets/893da91f-9002-4685-9196-b9b3086726e6)
+
+
+### 주사위 1회 돌린 후..
+
+![image](https://github.com/user-attachments/assets/1d2f5910-d508-4807-a82a-ed11b7a7560d)
+
+
+
+## <미션 상세 페이지>  <br/> <br/> 
+
+![image](https://github.com/user-attachments/assets/c2da04c1-ca7e-4fd4-9e6d-96c2eac8384a)
+
+
+
+## <미션 제출 페이지> <br/> <br/> 
+
+![image](https://github.com/user-attachments/assets/b81ceb0b-ca4e-4e3c-a1f5-732c14156a31)
+
+
