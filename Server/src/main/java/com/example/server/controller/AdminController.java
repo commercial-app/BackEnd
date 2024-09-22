@@ -74,7 +74,7 @@ public class AdminController {
     public String createMission(@ModelAttribute CreateMissionDTO createMissionDTO, @RequestParam String categoryName) {
         // 카테고리를 새로 만들거나 찾는 로직 필요
         missionService.createMission(createMissionDTO, categoryName);
-        return "redirect:/admin/missions";  // 성공 후 목록 페이지로 리다이렉트
+        return "redirect:/admin/missions/all";  // 성공 후 목록 페이지로 리다이렉트
     }
 
     /**
@@ -85,5 +85,12 @@ public class AdminController {
         List<CreateMissionDTO> missions = missionService.getAllMissions();
         model.addAttribute("missions", missions);
         return "admin/mission-list-all";  // 모든 미션 조회 템플릿
+    }
+
+    @GetMapping("/missions/delete/{mission_id}")
+    public String deleteMissions(@PathVariable("mission_id") Long id) {
+        // 카테고리를 새로 만들거나 찾는 로직 필요
+        missionService.deleteMission(id);
+        return "redirect:/admin/missions/all";
     }
 }

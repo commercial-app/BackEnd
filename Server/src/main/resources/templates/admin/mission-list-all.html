@@ -17,6 +17,7 @@
         <th>미션 설명</th>
         <th>이미지</th>
         <th>카테고리</th>
+        <th>작업</th>
     </tr>
     </thead>
     <tbody>
@@ -30,6 +31,10 @@
             <img th:src="${mission.imageUrl}" th:if="${mission.imageUrl != null}" alt="이미지 없음" width="100">
         </td>
         <td th:text="${mission.categoryName}"></td> <!-- 카테고리 -->
+        <td>
+            <a th:href="@{/admin/missions/delete/{id}(id=${mission.missionId})}"
+               onclick="return confirm('정말로 이 미션을 삭제하시겠습니까?');">삭제</a>
+        </td>
     </tr>
     </tbody>
 </table>
