@@ -131,4 +131,11 @@ public class MissionSummitService {
         // 회원과 미션에 해당하는 타일을 조회
         return tileRepository.findByMissionIdAndMemberId(missionId, memberId).get();
     }
+
+    @Transactional(readOnly = true)
+    public MissionSummitDTO getMissionSummitById(Long summitId) {
+        MissionSummit missionSummit = missionSummitRepository.findById(summitId)
+                .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_MISSION_SUMMIT));
+        return missionSummit.toDTO();
+    }
 }
