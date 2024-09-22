@@ -3,12 +3,15 @@ package com.example.server.controller;
 import com.example.server.common.annotation.LoginMembers;
 import com.example.server.dto.BoardDTO;
 import com.example.server.dto.MemberDTO;
+import com.example.server.dto.requestDTO.MissionSummitRequest;
 import com.example.server.service.BoardService;
+import com.example.server.service.MissionSummitService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class BoardController {
 
     private final BoardService boardService;
+    private final MissionSummitService missionSummitService;
 
     /**
      * 보드 정보 조회
@@ -45,5 +49,13 @@ public class BoardController {
         @RequestParam boolean isCycle) {
         BoardDTO updatedBoard = boardService.moveMember(boardId, dice, isCycle);
         return ResponseEntity.ok(updatedBoard);
+    }
+
+    @PostMapping("/{mission_id}")
+    public ResponseEntity<?> requestMissionSummit(@PathVariable("mission_id") Long mission_id,
+        @LoginMembers MemberDTO memberDTO,
+        @RequestBody MissionSummitRequest request) {
+        missionSummitService.saveMissionSummit(request, memberDTO.memberId(), mission_id);
+        return ResponseEntity.ok(mission_id);
     }
 }
