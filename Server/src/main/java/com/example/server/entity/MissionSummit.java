@@ -49,7 +49,7 @@ public class MissionSummit extends BaseEntity {
 
     public MissionSummitDTO toDTO() {
         return new MissionSummitDTO(id, imageUrl, content, state, rejection, mission.getMissionId(),
-            member.getMemberId());
+            member.getMemberId(),this.getCreatedAt(),this.getUpdatedAt());
     }
 
 }

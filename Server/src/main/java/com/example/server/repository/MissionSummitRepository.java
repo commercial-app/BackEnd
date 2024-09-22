@@ -10,7 +10,7 @@ import org.springframework.data.repository.query.Param;
 
 public interface MissionSummitRepository extends JpaRepository<MissionSummit, Long> {
 
-    @Query("SELECT ms FROM MissionSummit ms WHERE ms.member.memberId = :memberId AND ms.mission.missionId = :missionId ORDER BY ms.created_at DESC")
+    @Query("SELECT ms FROM MissionSummit ms WHERE ms.member.memberId = :memberId AND ms.mission.missionId = :missionId ORDER BY ms.createdAt DESC")
     Optional<MissionSummit> findTopByMemberIdAndMissionIdOrderByCreatedAtDesc(@Param("memberId") Long memberId,
         @Param("missionId") Long missionId);
 
