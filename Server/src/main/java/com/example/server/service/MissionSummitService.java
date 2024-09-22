@@ -34,6 +34,7 @@ public class MissionSummitService {
     private final TileRepository tileRepository;
     private final CompletedMissionRepository completedMissionRepository;
 
+
     @Transactional
     public Long saveMissionSummit(MissionSummitRequest request, Long memberId, Long missionId) {
         // memberId로 회원 정보 조회. 없으면 예외 발생
