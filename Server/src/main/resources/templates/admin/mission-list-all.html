@@ -22,7 +22,7 @@
     <tbody>
     <!-- 미션 리스트 반복 -->
     <tr th:each="mission : ${missions}">
-        <td th:text="${mission.id}"></td> <!-- 미션 ID -->
+        <td th:text="${mission.missionId}"></td> <!-- 미션 ID -->
         <td th:text="${mission.title}"></td> <!-- 미션 제목 -->
         <td th:text="${mission.content}"></td> <!-- 미션 설명 -->
         <td>

@@ -3,6 +3,7 @@ package com.example.server.service;
 import com.example.server.dto.CreateMissionDTO;
 import com.example.server.entity.Mission;
 import com.example.server.entity.MissionCategory;
+import com.example.server.repository.MissionCategoryRepository;
 import com.example.server.repository.MissionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,12 +17,20 @@ import java.util.stream.Collectors;
 public class MissionService {
 
     private final MissionRepository missionRepository;
+    private final MissionCategoryRepository missionCategoryRepository;
 
     /**
      * 미션 생성 메서드
      */
     @Transactional
-    public Long createMission(CreateMissionDTO createMissionDTO, MissionCategory category) {
+    public Long createMission(CreateMissionDTO createMissionDTO, String categoryName) {
+        MissionCategory category = missionCategoryRepository.findByName(categoryName)
+                .orElseGet(() -> {
+                    MissionCategory newCategory = new MissionCategory();
+                    newCategory.setName(categoryName);
+                    return missionCategoryRepository.save(newCategory);
+                });
+
         Mission mission = new Mission();
         mission.setTitle(createMissionDTO.getTitle());
         mission.setContent(createMissionDTO.getContent());
