@@ -1,8 +1,11 @@
 package com.example.server.controller;
 
+import com.example.server.dto.CreateMissionDTO;
 import com.example.server.dto.MissionSummitDTO;
 import com.example.server.dto.requestDTO.SummitResultRequest;
+import com.example.server.entity.MissionCategory;
 import com.example.server.entity.MissionSummitState;
+import com.example.server.service.MissionService;
 import com.example.server.service.MissionSummitService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -17,6 +20,7 @@ import java.util.List;
 public class AdminController {
 
     private final MissionSummitService missionSummitService;
+    private final MissionService missionService;
 
     /**
      * 미션 제출 목록 페이지
@@ -48,5 +52,36 @@ public class AdminController {
         SummitResultRequest request = new SummitResultRequest(state, rejection);
         missionSummitService.updateSummitResult(summitId, request);
         return "redirect:/admin/missions";  // 성공 후 목록 페이지로 리다이렉트
+    }
+
+    /**
+     * 미션 생성 페이지
+     */
+    @GetMapping("/missions/create")
+    public String showCreateMissionPage(Model model) {
+        // 빈 CreateMissionDTO 객체를 생성하여 모델에 추가
+        model.addAttribute("createMissionDTO", new CreateMissionDTO());
+        return "admin/create-mission";  // 미션 생성 페이지 템플릿
+    }
+
+    /**
+     * 미션 생성 처리
+     */
+    @PostMapping("/missions/create")
+    public String createMission(@ModelAttribute CreateMissionDTO createMissionDTO, @RequestParam String categoryName) {
+        MissionCategory category = new MissionCategory();  // 카테고리를 새로 만들거나 찾는 로직 필요
+        category.setName(createMissionDTO.getCategoryName());
+        missionService.createMission(createMissionDTO, category);
+        return "redirect:/admin/missions";  // 성공 후 목록 페이지로 리다이렉트
+    }
+
+    /**
+     * 모든 미션 조회 페이지
+     */
+    @GetMapping("/missions/all")
+    public String getAllMissions(Model model) {
+        List<CreateMissionDTO> missions = missionService.getAllMissions();
+        model.addAttribute("missions", missions);
+        return "admin/mission-list-all";  // 모든 미션 조회 템플릿
     }
 }
