@@ -57,13 +57,88 @@ ERD 다이어그램
 
 API 명세서
 
-| 기능           | HTTP매서드 | URL               | Header                        | Request                           | Status     & Response                |
-|----------------|------------|-------------------|-------------------------------|------------------------------------|-------------------------------------|
-| 회원가입 요청 | POST       | /api/register     | Content-Type: application/json | {                                  |
-|                |            |                   |                               |   "name": "사용자 이름",          |
-|                |            |                   |                               |   "email": "이메일 주소",         |
-|                |            |                   |                               |   "password": "비밀번호"           |
-|                |            |                   |                               | }                                  | 201 Created                          |
+| 기능               | HTTP매서드 | URL                           | Header                        | Request                           | Status     & Response                |
+|--------------------|------------|-------------------------------|-------------------------------|------------------------------------|-------------------------------------|
+| 회원가입 요청     | POST       | /api/register                 | Content-Type: application/json | {                                  |
+|                    |            |                               |                               |   "name": "사용자 이름",          |
+|                    |            |                               |                               |   "email": "이메일 주소",         |
+|                    |            |                               |                               |   "password": "비밀번호"           |
+|                    |            |                               |                               | }                                  | 201 Created                          |
+| 로그인 요청       | POST       | /api/login                    | Content-Type: application/json | {                                  |
+|                    |            |                               |                               |   "email": "이메일 주소",         |
+|                    |            |                               |                               |   "password": "비밀번호"           |
+|                    |            |                               |                               | }                                  | 200 OK                              |
+|                    |            |                               |                               |                                    | { "token": "액세스 토큰" }         |
+| 보드 정보 요청     | GET        | /api/board                    | Authorization: Bearer {token} |                                    | 200 OK                              |
+|                    |            |                               |                               | {                                   |                                  |
+|                    |            |                               |                               |   "board_id": "보드 ID",          |
+|                    |            |                               |                               |   "member_position": "멤버 위치", |
+|                    |            |                               |                               |   "tiles": [                      |
+|                    |            |                               |                               |     {                            |
+|                    |            |                               |                               |       "tile_id": "타일 ID",       |
+|                    |            |                               |                               |       "order": "타일 순서",       |
+|                    |            |                               |                               |       "state": "타일 상태",       |
+|                    |            |                               |                               |       "mission": {                |
+|                    |            |                               |                               |         "mission_id": "미션 ID",   |
+|                    |            |                               |                               |         "title": "미션 제목",      |
+|                    |            |                               |                               |         "content": "미션 내용",    |
+|                    |            |                               |                               |         "image_url": "이미지 URL", |
+|                    |            |                               |                               |         "category_name": "카테고리 이름", |
+|                    |            |                               |                               |         "mission_summit_state": "미션 제출 상태", |
+|                    |            |                               |                               |         "rejection": "거절 사유"   |
+|                    |            |                               |                               |       }                            |
+|                    |            |                               |                               |     }                              |
+|                    |            |                               |                               |   ]                                |
+|                    |            |                               |                               | }                                  |
+| 유저 이동 요청    | POST       | /api/board/{board_id}/move    | Authorization: Bearer {token} |                                    |
+|                    |            |                               |                               |   Param: dice=                    |
+|                    |            |                               |                               |   Param: is_cycle=                | 200 OK                              |
+|                    |            |                               |                               |                                    | {                                  |
+|                    |            |                               |                               |   "board_id": "보드 ID",          |
+|                    |            |                               |                               |   "member_position": "멤버 위치", |
+|                    |            |                               |                               |   "tiles": [                      |
+|                    |            |                               |                               |     {                            |
+|                    |            |                               |                               |       "tile_id": "타일 ID",       |
+|                    |            |                               |                               |       "order": "타일 순서",       |
+|                    |            |                               |                               |       "state": "타일 상태",       |
+|                    |            |                               |                               |       "mission": {                |
+|                    |            |                               |                               |         "mission_id": "미션 ID",   |
+|                    |            |                               |                               |         "title": "미션 제목",      |
+|                    |            |                               |                               |         "content": "미션 내용",    |
+|                    |            |                               |                               |         "image_url": "이미지 URL", |
+|                    |            |                               |                               |         "category_name": "카테고리 이름", |
+|                    |            |                               |                               |         "mission_summit_state": "미션 제출 상태", |
+|                    |            |                               |                               |         "rejection": "거절 사유"   |
+|                    |            |                               |                               |       }                            |
+|                    |            |                               |                               |     }                              |
+|                    |            |                               |                               |   ]                                |
+|                    |            |                               |                               | }                                  |
+| 미션 제출 요청    | POST       | /api/board/{mission_id}      | Authorization: Bearer {token} | Content-Type: application/json     |
+|                    |            |                               |                               | {                                  |
+|                    |            |                               |                               |   "image_url": "이미지 URL",      |
+|                    |            |                               |                               |   "content": "미션 내용"           |
+|                    |            |                               |                               | }                                  | 200 OK                              |
+| 대구FC 경기 일정 요청 | GET     | /api/daegu-fc/schedule       | Content-Type: application/json | {                                  |
+|                    |            |                               |                               |   "request": "Get match data for DGB Stadium" | 200 OK                              |
+|                    |            |                               |                               | }                                  | [                                  |
+|                    |            |                               |                               | {                                  |
+|                    |            |                               |                               |   "number": "경기 번호",          |
+|                    |            |                               |                               |   "date": "경기 날짜 및 시간",    |
+|                    |            |                               |                               |   "stadium": "경기장 이름",       |
+|                    |            |                               |                               |   "away": "상대 팀 이름"          |
+|                    |            |                               |                               | },                                 |
+|                    |            |                               |                               | // ... 나머지 경기 데이터        |
+|                    |            |                               |                               | ]                                  |
+| 유저 정보 요청    | GET        | /api/member                  | Authorization: Bearer {token} |                                    | 200 OK                              |
+|                    |            |                               |                               | {                                  |
+|                    |            |                               |                               |   "email": "이메일",              |
+|                    |            |                               |                               |   "name": "이름",                 |
+|                    |            |                               |                               |   "point": "포인트"               |
+|                    |            |                               |                               | }                                  |
+
+
+
+
 
 
 ### 구현 방식
