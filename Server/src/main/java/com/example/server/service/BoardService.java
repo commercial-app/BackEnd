@@ -7,6 +7,7 @@ import com.example.server.entity.*;
 import com.example.server.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -24,6 +25,7 @@ public class BoardService {
     /**
      * 유저 회원가입 시 보드를 생성하고, 20개의 타일과 미션을 할당한 후 반환
      */
+    @Transactional
     public BoardDTO createBoard(Long memberId) {
         // 유저(Member) 정보 조회
         Member member = memberRepository.findById(memberId)
@@ -65,7 +67,8 @@ public class BoardService {
     /**
      * 중복 미션을 방지하는 무작위 미션 선택 메서드 (중복 방지를 위해 selectedMissionIds 전달)
      */
-    private Mission getUniqueRandomMission(Set<Long> selectedMissionIds) {
+    @Transactional
+    public Mission getUniqueRandomMission(Set<Long> selectedMissionIds) {
         // 모든 미션 목록 조회
         List<Mission> missions = missionRepository.findAll();
 
@@ -87,6 +90,7 @@ public class BoardService {
     /**
      * 보드 상태 조회
      */
+    @Transactional
     public BoardDTO getBoard(Long memberId) {
         // 회원 ID로 보드 정보 조회
         Board board = boardRepository.findByMember_MemberId(memberId)
@@ -102,6 +106,7 @@ public class BoardService {
     /**
      * 주사위의 눈금만큼 업데이트 만약, isCycle 상태라면 완료한 미션 교체, tile state 초기화 후 반환
      */
+    @Transactional
     public BoardDTO moveMember(Long boardId, Integer dice, boolean isCycle) {
         // 보드 정보 조회
         Board board = boardRepository.findById(boardId)
@@ -125,7 +130,8 @@ public class BoardService {
     /**
      * 한 바퀴 돌았을 때 완료한 미션을 새로운 미션으로 갱신
      */
-    private void updateMissionsOnBoard(Board board) {
+    @Transactional
+    public void updateMissionsOnBoard(Board board) {
         // 보드에 속한 모든 타일 가져오기
         List<Tile> tiles = tileRepository.findByBoard(board);
         Set<Long> selectedMissionIds = tiles.stream() // 이미 부여된 미션을 중복 방지 목록에 추가
@@ -146,7 +152,8 @@ public class BoardService {
     /**
      * 타일들을 DTO로 변환
      */
-    private List<BoardDTO.TileDTO> convertTilesToDTOs(List<Tile> tiles, Long memberId) {
+    @Transactional
+    public List<BoardDTO.TileDTO> convertTilesToDTOs(List<Tile> tiles, Long memberId) {
         return tiles.stream().map(tile -> {
             // 미션 제출 상태 조회 (가장 최근의 MissionSummit 조회)
             Optional<MissionSummit> summitOpt = missionSummitRepository
