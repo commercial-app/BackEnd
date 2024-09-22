@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>미션 생성</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}"/>
+</head>
+<body>
+<h1>미션 생성</h1>
+
+<!-- 미션 생성 폼 -->
+<form th:action="@{/admin/missions/create}" method="post" th:object="${createMissionDTO}">
+    <div>
+        <label for="title">미션 제목</label>
+        <input type="text" id="title" name="title" th:field="*{title}" required>
+    </div>
+    <div>
+        <label for="content">미션 설명</label>
+        <textarea id="content" name="content" th:field="*{content}" required></textarea>
+    </div>
+    <div>
+        <label for="imageUrl">이미지 URL</label>
+        <input type="text" id="imageUrl" name="imageUrl" th:field="*{imageUrl}">
+    </div>
+    <div>
+        <label for="categoryName">카테고리 이름</label>
+        <input type="text" id="categoryName" name="categoryName" required>
+    </div>
+    <div>
+        <button type="submit">미션 생성</button>
+    </div>
+</form>
+
+<!-- 뒤로가기 버튼 -->
+<a th:href="@{/admin/missions}">뒤로가기</a>
+
+</body>
+</html>

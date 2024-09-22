@@ -3,6 +3,7 @@ package com.example.server.dto;
 
 import com.example.server.entity.MissionSummit;
 import com.example.server.entity.MissionSummitState;
+import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,16 +19,21 @@ public class MissionSummitDTO {
     private String rejection;
     private Long missionId;
     private Long memberId;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+
 
     // 생성자 오버로딩: ID를 제외한 생성자 (새로운 MissionSummit 생성 시 사용)
     public MissionSummitDTO(String imageUrl, String content, MissionSummitState state,
-        String rejection, Long missionId, Long memberId) {
+        String rejection, Long missionId, Long memberId,LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.imageUrl = imageUrl;
         this.content = content;
         this.state = state;
         this.rejection = rejection;
         this.missionId = missionId;
         this.memberId = memberId;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 
     // 엔티티로 변환하는 메서드 (필요시 사용)

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>미션 목록</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}"/>
+</head>
+<body>
+<h1>미션 목록</h1>
+
+<!-- 미션 목록 테이블 -->
+<table>
+    <thead>
+    <tr>
+        <th>미션 ID</th>
+        <th>미션 제목</th>
+        <th>미션 설명</th>
+        <th>이미지</th>
+        <th>카테고리</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- 미션 리스트 반복 -->
+    <tr th:each="mission : ${missions}">
+        <td th:text="${mission.missionId}"></td> <!-- 미션 ID -->
+        <td th:text="${mission.title}"></td> <!-- 미션 제목 -->
+        <td th:text="${mission.content}"></td> <!-- 미션 설명 -->
+        <td>
+            <!-- 이미지가 있으면 표시 -->
+            <img th:src="${mission.imageUrl}" th:if="${mission.imageUrl != null}" alt="이미지 없음" width="100">
+        </td>
+        <td th:text="${mission.categoryName}"></td> <!-- 카테고리 -->
+    </tr>
+    </tbody>
+</table>
+
+<!-- 미션 생성 페이지로 이동하는 링크 -->
+<a th:href="@{/admin/missions/create}">새로운 미션 생성</a>
+
+</body>
+</html>

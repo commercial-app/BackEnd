@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>미션 제출 목록</title>
+  <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<h1>미션 제출 목록</h1>
+<table>
+  <thead>
+  <tr>
+    <th>제출자</th>
+    <th>미션 제목</th>
+    <th>상태</th>
+    <th>제출 시간</th>
+    <th>상세 보기</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="missionSummit : ${missionSummits}">
+    <td th:text="${missionSummit.memberId}"></td>
+    <td th:text="${missionSummit.missionId}"></td>
+    <td th:text="${missionSummit.state}"></td>
+    <td th:text="${missionSummit.createdAt}"></td>
+    <td><a th:href="@{/admin/missions/{summitId}(summitId=${missionSummit.id})}">상세 보기</a></td>
+  </tr>
+  </tbody>
+</table>
+</body>
+</html>
