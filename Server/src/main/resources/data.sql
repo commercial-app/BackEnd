@@ -1,6 +1,35 @@
 -- 미션 카테고리 생성
-INSERT INTO mission_categories (name) VALUES ('관광');
-INSERT INTO mission_categories (name) VALUES ('맛집');
-INSERT INTO mission_categories (name) VALUES ('카페');
-INSERT INTO mission_categories (name) VALUES ('문화');
-INSERT INTO mission_categories (name) VALUES ('자연');
+INSERT INTO mission_categories (name) VALUES
+                                          ('관광'),
+                                          ('맛집'),
+                                          ('카페'),
+                                          ('문화'),
+                                          ('자연');
+
+-- 미션 생성
+INSERT INTO mission (title, content, image_url, category_id) VALUES
+                                                                 ('남구 앞산 케이블카 탑승', '앞산 케이블카를 탑승하고 찍은 사진으로 인증하세요.', 'https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyNDA0MTlfODIg%2FMDAxNzEzNDg3Njc4Nzkx.075QGKhKSw64fBjA_58Jq6J9IMvgAJXu6cOcsn_Gu3kg.H1qJtz7ZPI9wrVtcKg9fmK4e2pIyZe9sNLMeoKzT6cUg.JPEG%2F20240417%25A3%25DF163413.jpg', 1),
+                                                                 ('동구 불로동 고분군 탐방', '불로동 고분군을 방문하고 찍은 사진으로 인증하세요.', 'https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMTA3MjNfMjU4%2FMDAxNjI3MDE3MTExOTYx.sMjZgSSoPxST7en5HAjUznhrzPeA9RUsm3bKR-27CcIg.yes0PkrOwEkEJfrx3Rz__h5bkBhHd_2PvX-LLe93m4Mg.JPEG.js872002%2F20210620_181152.jpg', 1),
+                                                                 ('달서구 두류공원 산책', '두류공원을 산책하고 찍은 사진으로 인증하세요.', 'https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMzA4MjdfNDYg%2FMDAxNjkzMDgwMDM0OTMy.7TtRPWHmEMhLvK8lFiRL55Ong1wTHPESlCG5S9HsfZUg.TOIZUmIytTWOIOYk_xGoHJu_gTo--B_Fr-9CrnSwtpkg.JPEG.htpsch%2FIMG_5889.jpg', 4),
+                                                                 ('중구 김광석 다시그리기 길 방문', '김광석 다시그리기 길에서 벽화와 함께 찍은 사진으로 인증하세요.', 'https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMTEwMjhfMjgy%2FMDAxNjM1NDEyNTA2MjIy.ZdZIx8pxBDsxARgc2UPPH9rKW8P_gqGE4AORm3yDRm8g.42VlJEEXFSKjq0aRips-sL44AtVcRLLiMzcHLwtW4BYg.JPEG.iso1002%2F20211024_130430.jpg', 4),
+                                                                 ('중구 로코피플 방문', '로코피플 카페에서 디저트를 즐기고 영수증으로 인증하세요.', 'https://url.kr/7t9tgv', 3),
+                                                                 ('중구 동성로 쇼핑', '동성로에서 쇼핑을 즐기고 구매 영수증으로 인증하세요.', 'https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMzA5MjFfMTkg%2FMDAxNjk1MjkzNTUzNDUy.wd53hvhJsiFXfa0DlHKcsNe9ucl5hLq66-U2DTNf2UIg.X0QLiYOURqhFrJ1YBoPv_61-VYwVnzYvo9XvTIp8e-cg.JPEG.sojh5647%2FIMG_1761.jpg', 4),
+                                                                 ('중구 탈린커피바 체험', '탈린커피바에서 유명한 후르츠롤을 맛보고 영수증으로 인증하세요.', 'https://bit.ly/3TEfmvQ', 3),
+                                                                 ('달서구 83타워 방문', '83타워 아래에서 셀카를 찍어 인증하세요.', 'https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMTA2MDFfMjY2%2FMDAxNjIyNTMxMjA5MjM4.zg7_6i-RI0nyiPWW9ZXOMKjYFgvIy1CxlzzHoi-789Ug.S8r63ATYDiaYO81wcDyiTB3dslMaq9sPoShicjLWn7Ug.JPEG.love3401%2FIMG_3120.JPG', 1),
+                                                                 ('수성구 수성못 방문', '수성못을 배경으로 셀카를 찍어 인증하세요.', 'https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjEyMTFfOTUg%2FMDAxNjcwNzEzNzUzMjQ4.C3NU0Xevrs_9-sdNiaYtBiqb8V2DFPOkI4rhBe0omh8g.6jyeWoTFI3rzBL_ZcFUefA9rN4fxURm6YHD-tJJTb3kg.JPEG.smfromkorea%2F1670713749754.jpg', 4),
+                                                                 ('중구 대구근대골목단팥빵 맛보기', '대구근대골목단팥빵 본점에서 단팥빵을 구매하고 영수증으로 인증하세요.', 'https://bit.ly/3ztI6R2', 2),
+                                                                 ('중구 도마29에서 연어초밥 즐기기', '도마29에서 유명한 연어초밥을 먹고 영수증으로 인증하세요.', 'https://bit.ly/4e3b1KN', 2),
+                                                                 ('수성구 들안길 맛집 탐방', '들안길의 유명 맛집을 방문하고 영수증으로 인증하세요.', 'https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMTA5MDhfMTI5%2FMDAxNjMxMDY3ODUwNzU2.Rwe8DqrgRXDGKAALcLuhPAfHjx2pD4wyH-tZS-CH9sgg.pB3MWGXhrwKaZ50pn0rPCit1Dq8UePHYLenWysy520Ag.JPEG.ssung0904%2FDSC09361.JPG', 2),
+                                                                 ('중구 신서문김밥 체험', '서문시장의 신서문김밥을 맛보고 영수증으로 인증하세요.', 'https://bit.ly/4daYJ1P', 2),
+                                                                 ('북구 구암서원 방문', '구암서원의 멋진 절경이 담긴 사진을 찍어 인증하세요.', 'https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMzA3MTVfMTM2%2FMDAxNjg5Mzg1ODk2MDI1.nxr56HeQm-_0yNMlyv7IDYitmljgvcd5UL6pfqaDzmAg.gP7E6e8qaweHrE95jhMPxi5oWMW_ZdcfoO6hTMSWBkIg.JPEG.kwch5%2FIMG_1222.jpg', 1),
+                                                                 ('동구 팔공산 관봉석조여래좌상 방문', '팔공산의 관봉석조여래좌상과 함께 셀카를 찍어 인증하세요.', 'https://bit.ly/3ZRrain', 1),
+                                                                 ('북구 경북대학교 일청담 방문', '경북대학교 일청담에서 사진을 찍어 인증하세요.', 'https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2Fdata33%2F2008%2F2%2F29%2F184%2Fknu_kianwon5.jpg', 4),
+                                                                 ('동구 대구아쿠아리움 방문', '대구아쿠아리움의 바다 구름다리에서 셀카를 찍어 인증하세요.', 'https://bit.ly/4eoLifO', 4),
+                                                                 ('대구FC 경기 관람', '대구FC 경기를 관람 한 후 인증샷 남기기', 'https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMzA4MTBfODcg%2FMDAxNjkxNjQ2OTMwNDcy.dbzWnluVQyAZWltvbFFdBe_D5RPH06ddgJmQuumjOZ8g.ukX7szQmbTlauED84QkfJJeUYA6Q4mtdRd2UaVwL-v8g.JPEG.yuniu93%2Foutput_2445579037.jpg', 4),
+                                                                 ('동구 신서중앙공원 산책', '신서중앙공원에서 즐거운 시간을 보내고 공원 사진으로 인증하세요.', 'https://bit.ly/3zwxgtx', 5),
+                                                                 ('북구 제1국수집 방문', '제1국수집에서 유명한 국수를 먹고 영수증으로 인증하세요.', 'https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMTExMjhfMzQg%2FMDAxNjM4MTAwODU3ODg4.4ISGyoVaxAWYcEGEbCzvW6oaQugRM4UTPzQkpRvfsmUg.ii4DLb0K3dAsgxHsVOd9T_llGbMNXh6zmuHZr4MOK1Qg.JPEG.nara6194%2FIMG_5160.JPG', 2),
+                                                                 ('동구 레이지모닝 카페 방문', '레이지모닝 카페에서 유명한 빵을 맛보고 영수증으로 인증하세요.', 'https://d12zq4w4guyljn.cloudfront.net/750_750_20240412022328827_photo_558c97a967b6.jpg', 3),
+                                                                 ('대구지역 축제 체험', '대구지역 축제에 다녀온 후 인증 샷 남기', 'https://search.pstatic.net/common/?src=http%3A%2F%2Fimgnews.naver.net%2Fimage%2F5027%2F2024%2F09%2F20%2F0000051964_001_20240920202614403.jpg', 4),
+                                                                 ('동구 윤정경대한곱창 맛보기', '윤정경대한곱창본점에서 곱창을 먹고 영수증으로 인증하세요.', 'https://d12zq4w4guyljn.cloudfront.net/750_750_20230430065936032_photo_c0d27e8a21e0.jpg', 2),
+                                                                 ('달성 강정보 디아크 방문', '강정보 디아크를 방문하고 인증샷을 남겨보자', 'https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMzA4MTlfMTk0%2FMDAxNjkyNDEzMTE1NTc1.xXvwYEWuQsGQRDe3PoFq93rNJnKHZA6CMREM7WLbCv0g.IPqLMPH9Xjp6dWVPc0nPBaSOHabeIAFj8JSWO8M3PjMg.JPEG.ekk1519%2F20230528_125941.jpg', 4),
+                                                                 ('중구 경상감영공원', '경상감영공원을 방문하고 인증샷을 남겨보자', 'https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20150831_22%2F1441007207440SaWby_JPEG%2F116363533029993_0.jpg', 1);
