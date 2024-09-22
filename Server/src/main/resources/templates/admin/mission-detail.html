@@ -20,6 +20,15 @@
     <p th:text="${missionSummit.content}"></p>
   </div>
   <div>
+    <label>제출 이미지:</label>
+    <div th:if="${missionSummit.imageUrl != null}">
+      <img th:src="${missionSummit.imageUrl}" alt="제출 이미지" width="200">
+    </div>
+    <div th:if="${missionSummit.imageUrl == null}">
+      <p>이미지 없음</p>
+    </div>
+  </div>
+  <div>
     <label>제출 상태:</label>
     <select name="state">
       <option th:value="PENDING" th:selected="${missionSummit.state == 'PENDING'}">대기 중</option>
