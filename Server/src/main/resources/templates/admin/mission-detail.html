@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>미션 제출 상세</title>
+  <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<h1>미션 제출 상세</h1>
+<form th:action="@{/admin/missions/{summitId}/update(summitId=${missionSummit.id})}" method="post">
+  <div>
+    <label>제출자:</label>
+    <span th:text="${missionSummit.memberId}"></span>
+  </div>
+  <div>
+    <label>미션 제목:</label>
+    <span th:text="${missionSummit.missionId}"></span>
+  </div>
+  <div>
+    <label>제출 내용:</label>
+    <p th:text="${missionSummit.content}"></p>
+  </div>
+  <div>
+    <label>제출 상태:</label>
+    <select name="state">
+      <option th:value="PENDING" th:selected="${missionSummit.state == 'PENDING'}">대기 중</option>
+      <option th:value="APPROVED" th:selected="${missionSummit.state == 'APPROVED'}">승인</option>
+      <option th:value="REJECTED" th:selected="${missionSummit.state == 'REJECTED'}">반려</option>
+    </select>
+  </div>
+  <div>
+    <label>반려 이유:</label>
+    <textarea name="rejection" th:if="${missionSummit.state == 'REJECTED'}" th:text="${missionSummit.rejection}"></textarea>
+  </div>
+  <div>
+    <button type="submit">저장</button>
+  </div>
+</form>
+<a href="/admin/missions">목록으로 돌아가기</a>
+</body>
+</html>
