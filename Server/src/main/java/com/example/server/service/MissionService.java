@@ -48,6 +48,7 @@ public class MissionService {
     public List<CreateMissionDTO> getAllMissions() {
         return missionRepository.findAll().stream()
                 .map(mission -> new CreateMissionDTO(
+                        mission.getMissionId(),
                         mission.getTitle(),
                         mission.getContent(),
                         mission.getImageUrl(),

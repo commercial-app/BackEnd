@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CreateMissionDTO {
+    private Long missionId;  // 미션 ID 추가
     private String title;              // 미션의 제목
     private String content;            // 미션의 설명 내용
     private String imageUrl;           // 미션과 관련된 이미지 URL
