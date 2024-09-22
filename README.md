@@ -57,8 +57,7 @@ ERD 다이어그램
 
 API 명세서
 
-| 기능           | HTTP매서드          | URL               | Header                        
-      |  Request                            | Status     &  Response                 |
+| 기능           | HTTP매서드          | URL               | Header                        |  Request                            | Status     &  Response                 |
 |----------------|------------------------------------------------|
 | 회원가입 요청 |   POST    |   /api/register |  Content-Type: application/json | {
    name : ,
