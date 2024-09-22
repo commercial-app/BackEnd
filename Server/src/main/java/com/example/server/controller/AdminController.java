@@ -3,16 +3,19 @@ package com.example.server.controller;
 import com.example.server.dto.CreateMissionDTO;
 import com.example.server.dto.MissionSummitDTO;
 import com.example.server.dto.requestDTO.SummitResultRequest;
-import com.example.server.entity.MissionCategory;
 import com.example.server.entity.MissionSummitState;
 import com.example.server.service.MissionService;
 import com.example.server.service.MissionSummitService;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequiredArgsConstructor
@@ -69,9 +72,8 @@ public class AdminController {
      */
     @PostMapping("/missions/create")
     public String createMission(@ModelAttribute CreateMissionDTO createMissionDTO, @RequestParam String categoryName) {
-        MissionCategory category = new MissionCategory();  // 카테고리를 새로 만들거나 찾는 로직 필요
-        category.setName(createMissionDTO.getCategoryName());
-        missionService.createMission(createMissionDTO, category);
+        // 카테고리를 새로 만들거나 찾는 로직 필요
+        missionService.createMission(createMissionDTO, categoryName);
         return "redirect:/admin/missions";  // 성공 후 목록 페이지로 리다이렉트
     }
 
