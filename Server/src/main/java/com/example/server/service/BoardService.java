@@ -90,7 +90,7 @@ public class BoardService {
     /**
      * 보드 상태 조회
      */
-    @Transactional
+    @Transactional(readOnly = true)
     public BoardDTO getBoard(Long memberId) {
         // 회원 ID로 보드 정보 조회
         Board board = boardRepository.findByMember_MemberId(memberId)

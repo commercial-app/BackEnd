@@ -15,20 +15,21 @@
         <th>미션 ID</th>
         <th>미션 제목</th>
         <th>미션 설명</th>
-        <th>이미지 URL</th>
+        <th>이미지</th>
         <th>카테고리</th>
     </tr>
     </thead>
     <tbody>
     <!-- 미션 리스트 반복 -->
     <tr th:each="mission : ${missions}">
+        <td th:text="${mission.id}"></td> <!-- 미션 ID -->
+        <td th:text="${mission.title}"></td> <!-- 미션 제목 -->
+        <td th:text="${mission.content}"></td> <!-- 미션 설명 -->
         <td>
             <!-- 이미지가 있으면 표시 -->
             <img th:src="${mission.imageUrl}" th:if="${mission.imageUrl != null}" alt="이미지 없음" width="100">
         </td>
-        <td th:text="${mission.title}"></td>
-        <td th:text="${mission.content}"></td>
-        <td th:text="${mission.categoryName}"></td>
+        <td th:text="${mission.categoryName}"></td> <!-- 카테고리 -->
     </tr>
     </tbody>
 </table>
